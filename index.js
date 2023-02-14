@@ -23,9 +23,13 @@ module.exports = function (inFileName, outFileName, format) {
             throw new Error(`plantuml report error: ${(pstatus.output || '').toString()}`);
         }
 
-        const tmpFilename = path.join(tmp, path.parse(path.basename(inFileName)).name + '.svg' );
-        fs.renameSync(tmpFilename, outFileName);
+        try{
+            const tmpFilename = fs.readdirSync(tmp).filter(x=>x.endsWith(format))[0];
+            fs.renameSync(tmpFilename, outFileName);
+        }catch(e){
+            throw new Error(`cant find plantuml result in folder ${tmp} with name ${tmpFilename}: ${e}`);
+        }
     } finally{
-        try{ fs.rmdirSync(tmp); }catch(_){ /* eatall */ }
+        try{ fs.rmSync(tmp, {recursive:true, force: true}); }catch(_){ /* eatall */ }
     }
 }
