@@ -23,8 +23,9 @@ module.exports = function (inFileName, outFileName, format) {
             throw new Error(`plantuml report error: ${(pstatus.output || '').toString()}`);
         }
 
+        let tmpFilename = '<null>';
         try{
-            const tmpFilename = fs.readdirSync(tmp).filter(x=>x.endsWith(format))[0];
+            tmpFilename = fs.readdirSync(tmp).filter(x=>x.endsWith(format))[0];
             fs.renameSync(tmpFilename, outFileName);
         }catch(e){
             throw new Error(`cant find plantuml result in folder ${tmp} with name ${tmpFilename}: ${e}`);
