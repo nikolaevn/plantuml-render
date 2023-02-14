@@ -25,8 +25,8 @@ module.exports = function (inFileName, outFileName, format) {
 
         let tmpFilename = '<null>';
         try{
-            tmpFilename = fs.readdirSync(tmp).filter(x=>x.endsWith(format))[0];
-            fs.copyFileSync(tmpFilename, outFileName);
+            tmpFilename = path.join(tmp, fs.readdirSync(tmp).filter(x=>x.endsWith(format))[0]);
+            fs.renameSync(tmpFilename, outFileName);
         }catch(e){
             throw new Error(`cant find plantuml result in folder ${tmp} with name ${tmpFilename}: ${e}`);
         }
