@@ -1,2 +1,2 @@
 [lfs]
-	url = https://github.com/nikolaevn/plantuml-render.git/info/lfs
+	url = https://api.github.com/lfs/nikolaevn/plantuml-render
